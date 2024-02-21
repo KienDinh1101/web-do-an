@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title >Trang Thống kê, báo cáo</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon"  th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/admin/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/font-awesome/4.5.0/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/fonts.googleapis.com.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/ace.min.css}" class="ace-main-stylesheet" id="main-ace-style">
+    <link rel="stylesheet" th:href="@{/admin/css/ace-part2.min.css}" class="ace-main-stylesheet" />
+    <link rel="stylesheet" th:href="@{/admin/css/ace-skins.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/ace-rtl.min.css}">
+    <link rel="stylesheet" href=""  th:href="@{/admin/css/ace-ie.min.css}"/>
+    <link rel="stylesheet" href=""  th:href="@{/admin/css/report.css}"/>
+    <script th:src="@{/admin/js/ace-extra.min.js}"></script>
+    <script th:src="@{/admin/js/html5shiv.min.js}"></script>
+    <script th:src="@{/admin/js/respond.min.js}"></script>
+
+</head>
+<body class="no-skin">
+<div th:replace="fragments/admin-header :: header_admin "></div>
+<div class="main-container ace-save-state" id="main-container">
+    <div th:replace="fragments/admin-navbar :: navbar_admin "></div>
+    <div class="main-content">
+
+
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a th:href="@{/admin}">Trang chủ</a>
+                    </li>
+
+                    <li class="active">Thống kê Hóa đơn</li>
+                </ul><!-- /.breadcrumb -->
+
+
+            </div>
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <div class="container time-set">
+                            <div class='col-md-6 col-12'>
+                                <div class="form-group">
+                                    <label>Từ ngày: </label>
+                                    <div class='input-group date' id='datetimepicker6'>
+
+                                        <input type='text' class="form-control datetimepicker6" />
+                                        <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='col-md-6 col-12'>
+                                <div class="form-group">
+                                    <label>Đến ngày: </label>
+                                    <div class='input-group date' id='datetimepicker7'>
+
+                                        <input type='text' class="form-control datetimepicker7" />
+                                        <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='col-md-6 col-12'>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary" id="btn-detail" > Xem </button>
+                                    <span th:if="${rp.getDateS() != null}" class="report-search">Từ ngày: <span th:text="${rp.getDateS()}"></span> -> Đến ngày : <span th:text="${rp.getDateE()}"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+
+                            <div class="row text-center">
+                                <div class="col-md-6 col-12">
+                                    <h2>Tổng doanh thu</h2>
+                                    <h2><b th:text="${vm.getTotalPrice()}+ ' VNĐ'"></b></h2>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <h2>Tổng số lượng sản phẩm bán được </h2>
+                                    <h2><b th:text="${rp.getTotalProduct()}"></b></h2>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="clearfix">
+                            <div class="pull-right tableTools-container"></div>
+                        </div>
+
+
+                        <div class="table-header">
+                            Bảng Thống kê Hóa Đơn
+                        </div>
+
+                        <!-- div.table-responsive -->
+
+                        <!-- div.dataTables_borderWrap -->
+                        <div>
+                            <table id="dynamic-table" class="table table-striped table-bordered table-hover text-center">
+                                <thead>
+                                <tr class="text-center" >
+                                    <th class="center" style="width: 5%;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace" />
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </th>
+                                    <th style="width: 10%;">Mã CTHĐ</th>
+                                    <th style="width: 10%;">Mã SP</th>
+                                    <th style="width: 10%;">Mã HĐ</th>
+                                    <th  style="width: 10%;">Số lượng</th>
+
+                                    <th  style="width: 10%;">Màu</th>
+                                    <th  style="width: 10%;">Số năm bảo hành</th>
+                                    <th  style="width: 10%;">Ngày thanh toán</th>
+                                    <th  style="width: 10%;">Đổi trả</th>
+                                    <th style="width: 10%;">Giá</th>
+
+
+
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr  th:each="vmo : ${vm.getOrderProductVMS()}">
+                                    <td class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace" />
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </td>
+
+                                    <td th:text="${vmo.getId()}"></td>
+                                    <td th:text="${vmo.getProductId()}"></td>
+                                    <td th:text="${vmo.getOrderId()}"></td>
+                                    <td th:text="${vmo.getAmount()}"></td>
+                                    <td th:text="${vmo.getColor()}"></td>
+                                    <td th:text="${vmo.getYearGuarantee()}"></td>
+                                    <td th:if="${vmo.getDatePayment()  != null}" th:text="${vmo.getDatePayment()}"></td>
+                                    <td th:unless="${vmo.getDatePayment()  != null}" style="color: red;"> Chưa </td>
+                                    <td th:if="${vmo.getPay()  == 1 || vmo.getPay()  == null}" style="color: red;"> Chưa </td>
+                                    <td th:if="${vmo.getPay()  == 2 }"> Đã Đổi </td>
+                                    <td th:if="${vmo.getPay()  == 3 }" > Đã trả </td>
+                                    <td th:text="${vmo.getPrice()+ ' VNĐ'}"></td>
+
+                                 </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+
+                <div id="modal-table" class="modal fade" tabindex="-1">
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div th:replace="fragments/admin-footer :: footer_admin "></div>
+
+</div>
+<script  th:src="@{/admin/js/jquery-2.1.4.min.js}"></script>
+<script  th:src="@{/admin/js/bootstrap.min.js}"></script>
+<script  th:src="@{/admin/js/jquery.dataTables.min.js}"></script>
+<script  th:src="@{/admin/js/jquery.dataTables.bootstrap.min.js}"></script>
+<script  th:src="@{/admin/js/dataTables.buttons.min.js}"></script>
+<script  th:src="@{/admin/js/buttons.flash.min.js}"></script>
+<script  th:src="@{/admin/js/buttons.html5.min.js}"></script>
+<script  th:src="@{/admin/js/buttons.print.min.js}"></script>
+<script  th:src="@{/admin/js/buttons.colVis.min.js}"></script>
+<script  th:src="@{/admin/js/dataTables.select.min.js}"></script>
+
+<script  th:src="@{/admin/js/ace-elements.min.js}"></script>
+<script  th:src="@{/admin/js/ace.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script  th:src="@{/admin/js/custom.js}"></script>
+<script  th:src="@{/admin/js/product-report.js}"></script>
+<div class="tooltip top in" style="display: none;"><div class="tooltip-inner"></div></div>
+</body>
+</html>

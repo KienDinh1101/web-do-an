@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${vm.getProductVM().getName()}"></title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon"  th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/js/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/js/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/js/swiper/css/easyzoom.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/js/swiper/css/swiper.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/js/star/fontawesome-stars.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/chitiet.css}"/>
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: header_info"></div>
+<div class="content-chitiet">
+    <div class="container">
+        <div class="row top-chitiet">
+            <div class="col-md-4 col-12">
+                <div class="product__carousel">
+                <div class="swiper-container gallery-top">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide easyzoom easyzoom--overlay" th:each=" productImg : ${vm.getProductVM().getProductImageList()}">
+                            <a th:href="${productImg.getLink()}">
+                                <img th:src="${productImg.getLink()}" alt=""/>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next swiper-button-white"></div>
+                    <div class="swiper-button-prev swiper-button-white"></div>
+                </div>
+                <div class="swiper-container gallery-thumbs">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" th:each=" productImg : ${vm.getProductVM().getProductImageList()}">
+                            <img th:src="${productImg.getLink()}" alt="">
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Swiper and EasyZoom plugins end -->
+                </div>
+            </div>
+
+            <div class="col-md-8 col-12">
+                <div class="box-column-group">
+                    <div class="product-name">
+                        <h1 th:text="${vm.getProductVM().getName()}"></h1>
+                    </div>
+
+                    <div class="box-column-flex">
+                        <div class="box-left-right">
+                            <div class="product-info-order">
+                                <div class="box-title-product" th:if="${vm.getProductPriceVM().getDiscount()>0}">
+
+                                    <p class="giathuoc" style="color:teal">(Công ty)</p><strong class="specialprice"><span id="price" class="price" th:attr="data-price=${vm.getProductPriceVM().getDiscount()}" th:text="${vm.getProductPriceVM().getDiscountString()}+' VNĐ'"></span></strong><span class="oldprice"><span class="price" th:text="${vm.getProductPriceVM().getPriceString()}+' VNĐ'"></span></span>
+                                    <p class="is_vat"><i>(Giá đã bao gồm 10% VAT)</i></p>
+                                </div>
+                                <div class="box-title-product" th:if="${vm.getProductPriceVM().getDiscount()<=0}">
+
+                                    <p class="giathuoc" style="color:teal">(Công ty)</p><strong class="specialprice"><span id="price" class="price" th:attr="data-price=${vm.getProductPriceVM().getPrice()}" th:text="${vm.getProductPriceVM().getPriceString()}+' VNĐ'"></span></strong>
+                                    <p class="is_vat"><i>(Giá đã bao gồm 10% VAT)</i></p>
+                                </div>
+                                <div class="box-color-product-best">
+
+                                    <div class="list-color-product">
+
+                                        <label class="count_color">Có <font th:text="${vm.getProductVM().getSizeColorVMList().size()}"></font> màu chọn: </label>
+                                        <span class="item-color" >
+                                                <a class="item-mau" th:href="@{'/chi-tiet/'+${vm.getProductVM().getId()}+'/'+${sizeColor.getColor()}}" th:each=" sizeColor : ${vm.getProductVM().getSizeColorVMList()}" th:attr="data-color=${mau},data-id=${vm.getProductVM().getId()}" th:text="${sizeColor.getColor()}" >  &nbsp;</a>
+                                            </span>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="box-banner-services">
+                                </div>
+
+                                <div class="box-info-price">
+                                    <div class="box-icon-khuyenmai-group">
+                                        <a rel="nofollow" href="#" >
+                                            <div class="box-icon-km box-icon-km-tragop"></div>
+                                        </a>
+                                        <a rel="nofollow" href="#">
+                                            <div class="box-icon-km box-icon-km-tcdm"></div>
+                                        </a>
+                                        <a rel="nofollow" href="#" >
+                                            <div class="box-icon-km box-icon-km-baohanhtd"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-form-order">
+                                <div class="single-add-to-cart">
+                                    <div class="cart-quantity">
+                                        <div class="quantity">
+                                            <label>Số lượng:
+                                                <span th:if="${vm.getProductPriceVM().getAmount()> 0}" th:text="'Còn '+${vm.getProductPriceVM().getAmount()}+' Sản phẩm'"></span>
+                                                <span th:if="${vm.getProductPriceVM().getAmount() == 0}"> Hết hàng </span>
+                                            </label>
+                                            <div class="cart-plus-minus">
+                                                <input id="getAmount" class="cart-plus-minus-box" value="1"  min="1" type="number">
+                                            </div>
+
+                                            <button class="add-to-cart" th:attr="data-product=${vm.getProductVM().getId()},data-color=${mau}" >Thêm vào giỏ hàng</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="box-right-right">
+                            <div class="box-right-right-container">
+                                <div class="cuahang">
+                                    <i class="fa fa-globe" aria-hidden="true"></i> Cửa hàng
+                                </div>
+                                <div class="box-uu-dai1">
+                                    <ul>
+                                        <li class="icon-sheetv2"><img th:src="@{/image/hand.png}" class="icon-freecharge">Miễn phí charge thẻ dưới 10 triệu</li>
+                                        <li class="icon-sheetv2"><img th:src="@{/image/freeship.png}" class="icon-freecharge">Miễn phí giao hàng bán kính 10km</li>
+                                        <li class="icon-sheetv2"><img th:src="@{/image/card.png}" class="icon-freecharge">Thanh toán qua thẻ, trả góp tận nhà</li>
+                                        <li class="icon-sheetv2"><img th:src="@{/image/setup.png}" class="icon-freecharge">Cài đặt ứng dụng, phần mềm trọn đời</li>
+                                    </ul>
+                                </div>
+                                <div >
+                                    <div  class="cuahang">Đánh giá sản phẩm </div>
+                                    <div class="rate1">
+                                        <select id="rate-product" th:attr="data-rate=${sao}" >
+                                            <option value=""></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+
+                                        <button sec:authorize="isAuthenticated()" class="btn-rate" th:attr="data-product-id=${vm.getProductVM().getId()}">Đánh giá</button>
+                                        <a sec:authorize="isAnonymous()" class="btn-rate1" th:href="@{/login}">Đánh giá</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <style>
+                                .box-uu-dai-suggest-product .pro-suggest:last-child {
+                                    border: none;
+                                }
+
+                                .box-uu-dai-suggest-product .pro-suggest {
+                                    display: flex;
+                                    align-items: center;
+                                    line-height: 1.3;
+                                    border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+                                }
+                            </style>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row middle-detail">
+            <div class="noidung  col-md-8 col-12">
+                <div class="card">
+                    <div class="cuahang">
+                        Thông Tin Sản Phẩm
+                    </div>
+
+                    <div class="more" th:utext="${vm.getProductVM().getDescription()}">
+
+                    </div>
+
+                </div>
+            </div>
+            <!--TSKT-->
+            <div class="noidung col-md-4 col-12">
+
+                <div class="box-thong-so-kt">
+                    <div class="box-title-thong-so ">Thông số kỹ thuật</div>
+                    <div class="box-info-tskt">
+                        <ul>
+                            <li>
+                                <div class="title-info-tskt"  >
+                                    Màn hình:
+                                </div>
+                                <div class="content-info-tskt" th:text="${vm.getProductVM().getScreen()}" >
+                                   </div>
+                            </li>
+
+                            <li>
+                                <div class="title-info-tskt">
+                                    Model:
+                                </div>
+                                <div class="content-info-tskt" th:text="${vm.getProductVM().getModel()}">
+                                     </div>
+                            </li>
+
+                            <li>
+                                <div class="title-info-tskt">
+                                    Độ phân giải:
+                                </div>
+                                <div class="content-info-tskt" th:text="${vm.getProductVM().getResolution()}">
+                                     </div>
+                            </li>
+                            <li>
+                                <div class="title-info-tskt">
+                                    CPU:
+                                </div>
+                                <div class="content-info-tskt" th:text="${vm.getProductVM().getCpu()}">
+                                     </div>
+                            </li>
+                            <li>
+                                <div class="title-info-tskt">
+                                    RAM:
+                                </div>
+                                <div class="content-info-tskt" th:text="${vm.getProductVM().getRam()}">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="title-info-tskt">
+                                    Camera:
+                                </div>
+                                <div class="content-info-tskt" th:text="${vm.getProductVM().getCamera()}">
+                                   </div>
+                            </li>
+
+                            <li>
+                                <div class="title-info-tskt">
+                                    Pin:
+                                </div>
+                                <div class="content-info-tskt" th:text="${vm.getProductVM().getPin()}">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="title-info-tskt">
+                                    Other:
+                                </div>
+                                <div class="content-info-tskt" th:text="${vm.getProductVM().getOther()}">
+                                </div>
+                            </li>
+
+                        </ul>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+            <!--End TSKT-->
+
+        </div>
+        <!--End row midle details-->
+    </div>
+    <!--End Content chitiet-->
+</div>
+<div class="container">
+    <div class="fb-comments" th:attr="data-href = ${'https://localhost/chi-tiet/' + vm.getProductVM().getId()}" data-href="https://localhost/chi-tiet" data-width="100%" data-numposts="5"></div>
+    </br>
+</div>
+
+
+
+
+<div th:replace="fragments/footer :: footer_info"></div>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script th:src="@{/js/Jquery/Jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+<script th:src="@{/js/OwlCarousel2-2.3.4/dist/owl.carousel.min.js}"></script>
+<script th:src="@{/js/swiper/js/easyzoom.js}"></script>
+<script th:src="@{/js/swiper/js/swiper.min.js}"></script>
+<script th:src="@{/js/star/jquery.barrating.min.js}"></script>
+<script th:src="@{/js/readmore.min.js}"></script>
+<script th:src="@{/js/detail.js}"></script>
+<script th:src="@{/js/top.js}"></script>
+</body>
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0&appId=1135910566759671&autoLogAppEvents=1" nonce="b6OZthM2"></script>

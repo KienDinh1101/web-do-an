@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="shortcut icon"  th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/order-history.css}"/>
+
+    <title>Lịch sử đặt hàng</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header_info "></div>
+
+<div class="container">
+    <h2 style="margin-top: 40px; margin-bottom: 30px">Lịch sử đặt hàng</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th colspan="1">Index</th>
+                <th colspan="2">Họ tên</th>
+                <th colspan="2">Địa chỉ</th>
+                <th colspan="2">Số điện thoại</th>
+                <th colspan="1">Tổng tiền</th>
+                <th colspan="1">Ngày đặt hàng</th>
+                <th colspan="1">Tình trạng</th>
+                <th colspan="1">Chi tiết</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order,iter : ${vm.getOrderVMS()}">
+                <td colspan="1" th:text="${iter.index+1}" ></td>
+                <td colspan="2" th:text="${order.getCustomerName()}"></td>
+                <td colspan="2" th:text="${order.getAddress()}"></td>
+                <td colspan="2" th:text="${order.getPhoneNumber()}"></td>
+                <td colspan="1" th:text="${order.getPrice()} + ' VNĐ'"></td>
+                <td colspan="1" th:text="${order.getCreatedDate()}"></td>
+                <td colspan="1" th:if="${order.getStatus()  == 1 || order.getStatus()  == null}" style="color: red;"> Chưa thanh toán </td>
+                <td colspan="1" th:if="${order.getStatus()  == 2}"> Đã thanh toán </td>
+                <td colspan="1" th:if="${order.getStatus()  == 3 }" style="color: red";> Hủy </td>
+                <td colspan="1">
+                    <a class="btn btn-primary" th:href="@{'/order/history/'+${order.getId()}}" role="button">Chi tiết</a>
+
+                </td>
+
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer_info"></div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<script th:src="@{/js/order-history.js}"></script>
+<script th:src="@{/js/top.js}"></script>
+</body>
+</html>

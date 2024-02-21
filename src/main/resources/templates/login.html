@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập</title>
+    <link rel="shortcut icon"  th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+
+    <link rel="stylesheet" type="text/css" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+</head>
+<body>
+
+<div class="container">
+    <form class="form-signin" th:action="@{/login}" method="post">
+        <h1 class="text-center">
+            Đăng Nhập
+        </h1>
+
+        <div th:if="${param.error}">
+            <div class="alert alert-danger">
+                Invalid username and password.
+            </div>
+        </div>
+        <div th:if="${param.logout}">
+            <div class="alert alert-info">
+                You have been logged out.
+            </div>
+        </div>
+
+        <div class="input-group-login sombreado-input">
+            <div class="input-group-prepend-login">
+          <span class="input-group-text fondo-icon">
+            <i class="fas fa-user"></i>
+          </span>
+            </div>
+            <input
+                    type="text" name="username" id="username" required="true"
+                    class="border-0-login form-control-login input-border-none"
+                    placeholder="Tài khoản" required="true" autofocus="true"/>
+        </div>
+
+        <br />
+        <div class="input-group-login sombreado-input">
+            <div class="input-group-prepend-login">
+          <span class="input-group-text fondo-icon">
+            <i class="fas fa-lock"></i>
+          </span>
+            </div>
+            <input type="password"  type="password" name="password" id="password" class="border-0-login form-control-login input-border-none"  placeholder="Mật Khẩu"
+                    aria-label="password"  />
+        </div>
+
+        <br>
+        <input type="checkbox"  name="remember-me" id="remember-me"><label class="member"> Remember me</label><br>
+        <br>
+        <p class="text-center">
+            <button class="button-signup fondo-color-signup" type="submit">
+                <b>Đăng Nhập</b>
+            </button>
+        </p>
+        <p class="text-center"><a  th:href="@{'/forgot-password'}" role="button">Quên mật khẩu</a></p>
+        <p class="text-center">Bạn chưa có tài khoản ? <a  th:href="@{'/register'}" role="button">Đăng kí</a></p>
+        <p class="text-center"> Trở về <a class="home" th:href="@{/}">Trang chủ</a></p>
+        <p class="text-center">Hoặc</p>
+        <div class="icons-position">
+
+            <a href="#" class="icon-social">
+                <p class="text-center">
+                    <i class="fab fa-facebook-f fa-lg" style="color:#A00836;"></i>
+                </p>
+            </a>
+
+            <a href="#" class="icon-social">
+                <p class="text-center">
+                    <i class="fab fa-github fa-lg" style="color:#A00836;"></i>
+                </p>
+            </a>
+
+            <a href="#" class="icon-social">
+                <p class="text-center">
+                    <i class="fab fa-google fa-lg" style="color:#A00836;"></i>
+                </p>
+            </a>
+
+        </div>
+
+    </form>
+
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title >Quản lý chi tiết màu sản phẩm </title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon"  th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/admin/css/bootstrap.min.css}">
+
+    <link rel="stylesheet" th:href="@{/admin/font-awesome/4.5.0/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/fonts.googleapis.com.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/ace.min.css}" class="ace-main-stylesheet" id="main-ace-style">
+    <link rel="stylesheet" th:href="@{/admin/css/ace-part2.min.css}" class="ace-main-stylesheet" />
+    <link rel="stylesheet" th:href="@{/admin/css/ace-skins.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/ace-rtl.min.css}">
+    <link rel="stylesheet" href=""  th:href="@{/admin/css/ace-ie.min.css}"/>
+    <link rel="stylesheet" href=""  th:href="@{/admin/css/custom.css}"/>
+    <script th:src="@{/admin/js/ace-extra.min.js}"></script>
+
+
+</head>
+<body class="no-skin">
+<div th:replace="fragments/admin-header :: header_admin "></div>
+<div class="main-container ace-save-state" id="main-container">
+    <div th:replace="fragments/admin-navbar :: navbar_admin "></div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a th:href="@{/admin}">Trang chủ</a>
+                    </li>
+
+                    <li class="active">Chi Tiết Màu Sản phẩm</li>
+                </ul><!-- /.breadcrumb -->
+
+
+            </div>
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+
+
+                        <button th:attr="data-product-id = ${product}" type="button" class="btn btn-primary btn-add" id="new-product" data-toggle="modal" style="margin-bottom: 20px" data-target="#exampleModalLong">
+                           Thêm mới
+                        </button>
+
+                        <div class="clearfix">
+                            <div class="pull-right tableTools-container"></div>
+                        </div>
+                        <div class="table-header">
+                            Bảng Màu Sản Phẩm
+                        </div>
+
+                        <!-- div.table-responsive -->
+
+                        <!-- div.dataTables_borderWrap -->
+                        <div>
+                            <table id="dynamic-table" class="table table-striped table-bordered table-hover text-center">
+                                <thead>
+                                <tr class="text-center" >
+                                    <th class="center" style="width: 5%;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace" />
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </th>
+                                    <th style="width: 10%;">Mã sp</th>
+                                    <th style="width: 10%;">Màu</th>
+                                    <th style="width: 10%;">Số Lượng</th>
+                                    <th style="width: 10%;">Giá</th>
+                                    <th style="width: 15%;" class="hidden-480">Hành động</th>
+
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr th:each="vmo : ${vm}">
+                                    <td class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace" />
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </td>
+
+                                    <td th:text="${vmo.getProductId()}" ></td>
+                                    <td th:text="${vmo.getColor()}"></td>
+                                    <td th:text="${vmo.getAmount()}"></td>
+                                    <td th:text="${#numbers.formatInteger(vmo.getPrice(),3,'POINT') + ' VNĐ'}" ></td>
+
+
+                                    <td>
+                                        <div class="hidden-sm hidden-xs action-buttons">
+
+
+                                            <i class="green edit-product" id="edit-product" th:attr="data-product = ${vmo.getId()}, data-product-id=${vmo.getProductId()} " data-toggle="modal" title="Cập nhật sản phẩm" data-target="#exampleModalLong" style="cursor: pointer">
+                                                <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                            </i>
+<!--                                            <button class="red btn-xoa btn-custom"  data-toggle="modal" data-target="#exampleModal" th:attr="data-product-delete=0">-->
+<!--                                                <i class="ace-icon fa fa-trash-o bigger-130"></i>-->
+<!--                                            </button>-->
+
+
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Xóa sản phẩm</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Bạn có muốn xóa sản phẩm
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-delete btn-danger" th:attr="data-detail-productid=0">Xóa</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Thêm mới/ Cập nhật màu sản phẩm</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="form-group margin-bottom-15" style="margin-top: 20px">
+                                    <label>Màu:</label>
+                                    <input type="text" class="form-control" id="input-product-color">
+                                </div>
+                                <div class="form-group margin-bottom-15" style="margin-top: 20px">
+                                    <input type="hidden" class="form-control" th:attr="detail-product-id = 0" id="input-product-product-id">
+                                </div>
+
+
+                                <div class="form-group margin-bottom-15">
+                                    <label>Số lượng:</label>
+                                    <input type="number" min="1" value="1"  class="form-control" id="input-product-amount"></input>
+                                </div>
+
+                                <div class="form-group margin-bottom-15" style="width: 100%">
+                                    <label>Giá:</label>
+                                    <input type="number" min="1" value="1" class="form-control" style="display: block; margin: 5px ;width: 100%" id="input-product-price">
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary btn-save-product">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div id="modal-table" class="modal fade" tabindex="-1">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="fragments/admin-footer :: footer_admin "></div>
+
+</div>
+<script type="text/javascript">
+    if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+<script  th:src="@{/admin/js/jquery-2.1.4.min.js}"></script>
+<script  th:src="@{/admin/js/bootstrap.min.js}"></script>
+<script  th:src="@{/admin/js/jquery.dataTables.min.js}"></script>
+<script  th:src="@{/admin/js/jquery.dataTables.bootstrap.min.js}"></script>
+<script  th:src="@{/admin/js/dataTables.buttons.min.js}"></script>
+<script  th:src="@{/admin/js/buttons.flash.min.js}"></script>
+<script  th:src="@{/admin/js/buttons.html5.min.js}"></script>
+<script  th:src="@{/admin/js/buttons.print.min.js}"></script>
+<script  th:src="@{/admin/js/buttons.colVis.min.js}"></script>
+<script  th:src="@{/admin/js/dataTables.select.min.js}"></script>
+
+<script  th:src="@{/admin/js/ace-elements.min.js}"></script>
+<script  th:src="@{/admin/js/ace.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+
+<script  th:src="@{/admin/js/product-detail.js}"></script>
+<div class="tooltip top in" style="display: none;"><div class="tooltip-inner"></div></div>
+</body>
+</html>

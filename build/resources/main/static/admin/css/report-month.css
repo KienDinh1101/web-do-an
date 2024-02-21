@@ -1,0 +1,88 @@
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: #2c3e50;
+    background-image: none;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+    display: none;
+}
+/* Custom Select */
+.select {
+    position: relative;
+    display: flex;
+    width: 20em;
+    height: 3em;
+    line-height: 3;
+    background: #2c3e50;
+    overflow: hidden;
+    border-radius: .25em;
+}
+select {
+    flex: 1;
+    padding: 0 .5em;
+    color: #fff;
+    cursor: pointer;
+}
+/* Arrow */
+.select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: #34495e;
+    cursor: pointer;
+    pointer-events: none;
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+}
+/* Transition */
+.select:hover::after {
+    color: #f39c12;
+}
+.form-control:focus, select:focus {
+    background-color: #2c3e50;
+}
+
+.title {
+    margin: 4% 0 2.5% 0;
+}
+
+h1 {
+    line-height: 0.25;
+    margin-bottom: 0px;
+}
+
+.label {
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+ button {
+    font-size: 15px;
+    font-weight: 300;
+    font-family: monospace;
+    text-transform: uppercase;
+    background: #fff;
+    border-radius: 2px;
+    width: 170px;
+    margin-bottom: 3%;
+}
+h1 {
+    line-height: 1.25;
+    margin: 0px;
+}
+.container {
+    display: flex;
+}
+
+

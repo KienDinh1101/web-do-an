@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:unless="${product.id != 0} " >Thêm sản phẩm </title>
+    <title th:if="${product.id != 0} " >Cập nhật sản phẩm </title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon"  th:href="@{/image/favicon.ico}"/>
+
+    <link rel="stylesheet" th:href="@{/admin/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/font-awesome/4.5.0/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/fonts.googleapis.com.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/ace.min.css}" class="ace-main-stylesheet" id="main-ace-style">
+    <link rel="stylesheet" th:href="@{/admin/css/ace-part2.min.css}" class="ace-main-stylesheet" />
+    <link rel="stylesheet" th:href="@{/admin/css/ace-skins.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/ace-rtl.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/ace-ie.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin/css/custom.css}"/>
+    <link rel="stylesheet" th:href="@{/admin/css/add-product.css}"/>
+    <script th:src="@{/admin/js/ace-extra.min.js}"></script>
+
+
+</head>
+<body class="no-skin">
+<div th:replace="fragments/admin-header :: header_admin "></div>
+<div class="main-container ace-save-state" id="main-container">
+    <div th:replace="fragments/admin-navbar :: navbar_admin "></div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a th:href="@{/admin}">Trang chủ</a>
+                    </li>
+
+                    <li class="active">Sản phẩm</li>
+                </ul><!-- /.breadcrumb -->
+
+
+            </div>
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <div class="clearfix">
+                            <div class="pull-right tableTools-container"></div>
+                        </div>
+
+                        <div class="table-header" th:if="${product.id != 0}">
+                            Cập nhật Sản Phẩm
+                        </div>
+                        <div class="table-header" th:unless="${product.id != 0}">
+                            Thêm  Sản Phẩm Mới
+                        </div>
+                        <div>
+
+                            <div class="d-flex">
+                                <form th:action="@{/admin/product/update}" th:object="${product}" method="post">
+                                    <input type="hidden" name="id" id="id" th:field="*{id}">
+                                    <label>
+                                        <span class="fname">Tên sản phẩm <span class="required">*</span></span>
+                                        <input type="text" name="name" id="name" th:field="*{name}" required>
+                                    </label>
+                                    <label>
+                                        <span class="lname">Mô tả ngắn<span class="required">*</span></span>
+                                        <input type="text" name="shortDesc" id="shortDesc" th:field="*{shortDesc}">
+                                    </label>
+                                    <label>Chi tiết sản phẩm</label>
+                                    <label>
+                                        <textarea name="editor" id="editor" th:field="*{description}" rows="10" cols="80"></textarea>
+                                    </label>
+                                    <label>
+                                        <span>Hãng <span class="required" >*</span></span>
+                                        <select name="category" th:field="*{category}"  >
+                                            <option th:each="category : ${categories}" th:value="${category.getId()}" th:text="${category.name}"></option>
+                                        </select>
+                                    </label>
+                                    <div style="text-align: center" th:if="${product.id != null}">
+                                        <img style="max-width: 200px; height: auto" th:src="${product.mainImage}" class="product-main-image">
+                                    </div>
+                                    <div style="text-align: center" th:unless="${product.id != null}">
+                                        <img style="max-width: 200px; height: auto" src="https://www.vietnamprintpack.com/images/default.jpg" class="product-main-image">
+                                    </div>
+                                    <label class="image-upload">Hình ảnh</label>
+                                    <label class="custom-file-upload">
+
+                                        <input type="file" id="change-product-mainImage">
+                                        <i class="fa fa-cloud-upload" ></i> Tải tệp lên
+                                    </label>
+                                    <label>
+                                        <span>Hình ảnh <span class="required">*</span></span>
+                                        <input type="hidden"  name="mainImage" id="mainImage"  th:field="*{mainImage}"  required>
+                                    </label>
+                                    <label>
+                                        <span>Số năm bảo hành <span class="required">*</span></span>
+                                        <input type="number" min="1" name="yearGuaratee" id="yearGuaratee" th:field="*{yearGuaratee}" value="1" required>
+                                    </label>
+
+                                    <h1 class="text-center">
+                                        <b>Thông số kỹ thuật <span class="required">*</span></b>
+                                    </h1>
+                                    <label>
+                                        <span>Kích thước màn hình: <span class="required">*</span></span>
+                                        <input type="text" name="screen" id="screen" th:field="*{screen}">
+                                    </label>
+                                    <label>
+                                        <span>Độ phân giải <span class="required">*</span></span>
+                                        <input type="text" name="resolution" th:field="*{resolution}">
+                                    </label>
+                                    <label>
+                                        <span>CPU: <span class="required">*</span></span>
+                                        <input type="text" name="cpu" th:field="*{cpu}">
+                                    </label>
+                                    <label>
+                                        <span>Ram <span class="required">*</span></span>
+                                        <input type="text" name="ram" th:field="*{ram}">
+                                    </label>
+                                    <label>
+                                        <span>Camera: <span class="required">*</span></span>
+                                        <input type="text" name="camera" th:field="*{camera}">
+                                    </label>
+                                    <label>
+                                        <span>Pin: <span class="required">*</span></span>
+                                        <input type="text" name="pin" th:field="*{pin}">
+                                    </label>
+                                    <label>
+                                        <span>Nhà sản xuất: <span class="required">*</span></span>
+                                        <input type="text" name="manufacturer" th:field="*{manufacturer}">
+                                    </label>
+                                    <label>
+                                        <span>Model: <span class="required">*</span></span>
+                                        <input type="text" name="model" th:field="*{model}">
+                                    </label>
+                                    <label>
+                                        <span>Khác: <span class="required">*</span></span>
+                                        <input type="text" name="other" th:field="*{other}">
+                                    </label>
+
+                                    <div th:if="${product.id == null || product.id == 0 }">
+                                        <button  class="btn-add-product" type="submit" >Thêm sản phẩm</button>
+                                    </div>
+                                    <div th:if="${product.id != 0}">
+                                        <a class="btn btn-primary btn-huy" type="button" th:href="@{/admin/product}"> Hủy cập nhật </a>
+                                        <button class="btn btn-primary btn-update-product" type="submit">Cập nhật sản phẩm</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div id="modal-table" class="modal fade" tabindex="-1">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="fragments/admin-footer :: footer_admin "></div>
+
+</div>
+<script type="text/javascript">
+    if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+<script  th:src="@{/admin/js/jquery-2.1.4.min.js}"></script>
+<script  th:src="@{/admin/js/bootstrap.min.js}"></script>
+<script  th:src="@{/admin/js/jquery.dataTables.min.js}"></script>
+<script  th:src="@{/admin/js/jquery.dataTables.bootstrap.min.js}"></script>
+<script  th:src="@{/admin/js/dataTables.buttons.min.js}"></script>
+<script  th:src="@{/admin/js/buttons.flash.min.js}"></script>
+<script  th:src="@{/admin/js/buttons.html5.min.js}"></script>
+<script  th:src="@{/admin/js/buttons.print.min.js}"></script>
+<script  th:src="@{/admin/js/buttons.colVis.min.js}"></script>
+<script  th:src="@{/admin/js/dataTables.select.min.js}"></script>
+
+<script  th:src="@{/admin/js/ace-elements.min.js}"></script>
+<script  th:src="@{/admin/js/ace.min.js}"></script>
+    <script src="//cdn.ckeditor.com/4.13.1/full/ckeditor.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<!--<script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>-->
+
+<script  th:src="@{/admin/js/product.js}"></script>
+<div class="tooltip top in" style="display: none;"><div class="tooltip-inner"></div></div>
+</body>
+</html>

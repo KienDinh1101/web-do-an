@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title >Trang quản trị</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon"  th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/admin/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/font-awesome/4.5.0/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/fonts.googleapis.com.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/ace.min.css}" class="ace-main-stylesheet" id="main-ace-style">
+    <link rel="stylesheet" th:href="@{/admin/css/ace-part2.min.css}" class="ace-main-stylesheet" />
+    <link rel="stylesheet" th:href="@{/admin/css/ace-skins.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/ace-rtl.min.css}">
+    <link rel="stylesheet" href=""  th:href="@{/admin/css/ace-ie.min.css}"/>
+    <script th:src="@{/admin/js/ace-extra.min.js}"></script>
+    <script th:src="@{/admin/js/html5shiv.min.js}"></script>
+    <script th:src="@{/admin/js/respond.min.js}"></script>
+
+</head>
+<body class="no-skin">
+<div th:replace="fragments/admin-header :: header_admin "></div>
+<div class="main-container ace-save-state" id="main-container">
+    <div th:replace="fragments/admin-navbar :: navbar_admin "></div>
+    <div class="main-content">
+        <h1>hello</h1>
+
+
+
+    </div>
+    <div th:replace="fragments/admin-footer :: footer_admin "></div>
+
+</div>
+<script  th:src="@{/admin/js/jquery-2.1.4.min.js}"></script>
+<script  th:src="@{/admin/js/bootstrap.min.js}"></script>
+<script  th:src="@{/admin/js/jquery-ui.custom.min.js}"></script>
+<script  th:src="@{/admin/js/jquery.ui.touch-punch.min.js}"></script>
+<script  th:src="@{/admin/js/jquery.easypiechart.min.js}"></script>
+<script  th:src="@{/admin/js/jquery.sparkline.index.min.js}"></script>
+<script  th:src="@{/admin/js/jquery.flot.min.js}"></script>
+<script  th:src="@{/admin/js/jquery.flot.pie.min.js}"></script>
+<script  th:src="@{/admin/js/jquery.flot.resize.min.js}"></script>
+<script  th:src="@{/admin/js/ace-elements.min.js}"></script>
+<script  th:src="@{/admin/js/ace.min.js}"></script>
+<script  th:src="@{/admin/js/custom.js}"></script>
+<div class="tooltip top in" style="display: none;"><div class="tooltip-inner"></div></div>
+</body>
+</html>

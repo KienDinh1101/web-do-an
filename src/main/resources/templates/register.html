@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng kí</title>
+    <link rel="shortcut icon"  th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
+</head>
+<body>
+<div class="container">
+    <form class="form-registration" th:action="@{/register-user}" th:object="${user}" method="post">
+        <div class="container">
+            <h1>Đăng kí Tài Khoản</h1>
+            <p>Vui lòng điền thông tin đầy đủ để tạo tài khoản</p>
+            <div th:if="${param.email_exits}">
+                <div class="alert alert-danger">
+                   Email đã tồn tại !!
+                </div>
+            </div>
+            <div th:if="${param.user_exits}">
+                <div class="alert alert-danger">
+                    User đã tồn tại !!
+                </div>
+            </div>
+            <div th:if="${param.error_system}">
+                <div class="alert alert-danger">
+                    Lỗi !!
+                </div>
+            </div>
+            <div>
+                <div class="alert alert-danger check-dangky" style="display:none;color:red;">
+                    Lỗi
+                </div>
+            </div>
+            <label for="username"><b>Tài Khoản:</b></label>
+            <input type="text" placeholder="Tài Khoản" id="username" th:field="*{userName}" name="username" />
+
+            <label for="email"><b>Email:</b></label>
+            <input type="text" placeholder="Điền Email" id="email" th:field="*{email}" name="email" required>
+
+            <label for="password"><b>Mật Khẩu:</b></label>
+            <input type="password" placeholder="Nhập Mật Khẩu" id="password" th:field="*{password}" name="password" required>
+
+
+            <br>
+
+            <div class="clearfix">
+                <button type="submit" onclick="dangkythanhcong(event)" class="btn">Sign Up</button>
+            </div>
+            <p class="text-right"> Trở về <a class="home" th:href="@{/}">Trang chủ</a></p>
+        </div>
+    </form>
+    <script th:src="@{/js/Jquery/Jquery.min.js}"></script>
+    <script th:src="@{/js/registration.js}"></script>
+
+
+</div>
+</body>
+</html>

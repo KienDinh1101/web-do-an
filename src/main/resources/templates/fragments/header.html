@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="header_info ">
+    <div class="top-nav group">
+        <div class="container">
+            <section>
+                <div class="social-top-nav">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-google"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                </div> <!-- End Social Topnav -->
+
+                <ul class="top-nav-quicklink flexContain">
+                    <li><a th:href="@{/}"><i class="fa fa-home"></i> Trang chủ</a></li>
+                    <li><a th:href="@{/tin-tuc}"><i class="fa fa-newspaper-o"></i> Tin tức</a></li>
+                    <li><a th:href="@{/tuyen-dung}"><i class="fa fa-handshake-o"></i> Tuyển dụng</a></li>
+                    <li><a th:href="@{/lien-he}"><i class="fa fa-phone"></i> Liên hệ</a></li>
+                    <li>
+                        <div class="member">
+                            <div sec:authorize="isAuthenticated()">
+
+                                <div class="dropdown">
+
+                                    <button th:inline="text" style="margin-right: 10px" class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-user"></i>   [[${#httpServletRequest.remoteUser}]]
+
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a sec:authorize="${hasRole('ADMIN')}" class="dropdown-item" th:href="@{/admin}">Trang quản trị</a>
+                                        <a class="dropdown-item" th:href="@{/user/detail}">Thông tin cá nhân</a>
+                                        <a class="dropdown-item" th:href="@{/order/history}">Lịch sử mua hàng</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" th:href="@{/logout}">Thoát</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div sec:authorize="isAnonymous()">
+
+                                <div class="dropdown">
+
+                                    <button th:inline="text" style="margin-right: 10px" class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-user"></i> Đăng Nhập
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" th:href="@{/order/history}">Lịch sử mua hàng</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" th:href="@{/login}">Đăng Nhập</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> <!-- End Member -->
+                </ul> <!-- End Quick link -->
+            </section><!-- End Section -->
+        </div>
+    </div>
+    <section>
+        <div class="header group">
+            <div class="container header1">
+                <div class="logo">
+                    <a th:href="@{/}">
+                        <img th:src="@{/image/logo.png}" alt="Trang chủ Smartphone Store" title="Trang chủ Smartphone Store">
+                    </a>
+                </div> <!-- End Logo -->
+
+                <div class="content">
+                    <div class="search-header">
+                        <form class="input-search" method="get" th:action="@{/}" th:object="${productname}" >
+                            <div class="autocomplete">
+                                <input id="search-box" th:field="*{name}" name="search" autocomplete="off" type="text" placeholder="Nhập từ khóa tìm kiếm...">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                    Tìm kiếm
+                                </button>
+                            </div>
+                        </form> <!-- End Form search -->
+
+                    </div> <!-- End Search header -->
+
+
+
+                    <div class="cart">
+                        <a th:href="@{/cart}">
+                            <div class="shopping-cart">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span>Giỏ hàng <span class="badge" th:text="${total}"></span></span>
+                            </div>
+                        </a>
+                    </div> <!-- End Cart -->
+
+
+                    </div><!-- End Tools Member -->
+                </div> <!-- End Content -->
+            </div>
+
+
+    </section>
+</div>
+
+</body>
+</html>

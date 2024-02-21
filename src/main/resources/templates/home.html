@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chủ</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon"  th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/js/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/js/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header_info"></div>
+<div class="banner container">
+    <div class="owl-carousel owl-theme owl-loaded owl-drag">
+        <div class="item-slider">
+            <a target="_blank" th:href="@{img/banners/banner1.png}">
+                <img th:src="@{img/banners/banner1.png}">
+            </a>
+        </div>
+        <div class="item-slider">
+            <a target="_blank" th:href="@{img/banners/banner2.png}">
+                <img th:src="@{img/banners/banner3.png}">
+            </a>
+        </div>
+        <div class="item-slider">
+            <a target="_blank" th:href="@{img/banners/banner3.png}">
+                <img th:src="@{img/banners/banner3.png}">
+            </a>
+        </div>
+
+
+
+    </div>
+
+
+
+
+</div>
+<div class="container">
+    <img src="img/banners/blackFriday.gif" alt="" style="width: 100%;margin-top: 10px; margin-bottom: 10px;">
+
+    <div class="page-title category-title">
+        <h1> Điện thoại	</h1>
+        <div class="tab-group">
+            <a class="mt-tabs" th:title="${category.getName()}"  th:href="${'/?categoryId='+category.getId()}" th:each="category : ${vm.getCategoryVMList()}" th:text="${category.getName()}"></a>
+        </div>
+    </div>
+
+    <div class="left" style="margin-right: 5px;">
+        <ul class="price-filter-link">
+            <li><strong>Chọn mức giá: </strong></li>
+            <li><a th:href="${'?'+'&searchByPrice1=0&searchByPrice2=2000000'}">Dưới 2.000.000</a></li>
+            <li><a th:href="${'?'+'&searchByPrice1=2000000&searchByPrice2=4000000'}">Từ 2.000.000 - 4.000.000</a></li>
+            <li><a th:href="${'?'+'&searchByPrice1=4000000&searchByPrice2=7000000'}">Từ 4.000.000 - 7.000.000</a></li>
+            <li> <a th:href="${'?'+'&searchByPrice1=7000000&searchByPrice2=10000000'}">Từ 7.000.000 - 10.000.000</a></li>
+            <li> <a th:href="${'?'+'&searchByPrice1=10000000&searchByPrice2=100000000'}">Trên 10.000.000</a></li>
+        </ul>
+    </div>
+    <div class="right" style="margin-bottom: 10px;">
+
+        <div class="col-md-12 filters-block">
+            <ul class="col-xs-12 group_filter">
+                <li><strong>Sắp xếp theo:</strong></li>
+                <li><a id="desc" th:href="${'?'+'&sortByP=DESC'}"></i>&nbsp;Giá cao</a></li>
+                <li><a id="asc" th:href="${'?'+'&sortByP=ASC'}" ><i class="fa fa-sort-amount-asc" aria-hidden="true"></i>&nbsp;Giá thấp</a></li>
+                <li><a id="view_count2" href="javascript:void(0)" ><i class="fa fa-star" aria-hidden="true"></i>&nbsp;Khuyến mãi</a></li>
+            </ul>
+        </div>
+
+
+    </div>
+    <div class="clear"></div>
+
+
+    <div class="row tbl-sp">
+        <div class="col-md-10 col-sm-10 col-xs-10"><h4 th:if="${vm.getKeyWord()}" th:text="${vm.getKeyWord()}"></h4></div>
+        <div class="sanPham col-lg-3 col-md-3 col-sm-6 col-12" th:each="vmo : ${vm.getObjectProductVM()}">
+            <a>
+                <a th:href="@{'/chi-tiet/'+${vmo.getId()}+'/'+${vmo.getColor()}}"> <img th:src="@{${vmo.getMainImage()}}" alt=""></a>
+                <a th:href="@{'/chi-tiet/'+${vmo.getId()}+'/'+${vmo.getColor()}}"><h3 th:text="${vmo.getName()}"></h3></a>
+                <div class="price" th:if="${vmo.getDiscount() != null}">
+                    <strong class="price-product" th:attr="data-price=${vmo.getPrice() * (1 - vmo.getDiscount())}" th:text="${#numbers.formatInteger((vmo.getPrice() * (1 - vmo.getDiscount())),3,'POINT')}"></strong>
+                    <strong>VNĐ</strong>
+                    <span th:text="${#numbers.formatInteger(vmo.getPrice(),3,'POINT') + ' VNĐ'}"></span>
+                </div>
+                <div class="price" th:if="${vmo.getDiscount() == null}">
+                    <strong class="price-product" th:attr="data-price=${vmo.getPrice()}" th:text="${#numbers.formatInteger(vmo.getPrice(),3,'POINT')}"> </strong>
+                    <strong>VNĐ</strong>
+                </div>
+                <div class="ratingresult">
+                    <div class="rateYo" th:if="${vmo.getTbRate() != null}" th:attr="data-rate=${vmo.getTbRate()}"> </div>
+                    <div class="rateYo" th:if="${vmo.getTbRate() == null}" th:attr="data-rate=0"> </div>
+                    <span th:if="${vmo.getSlRate() != null}">
+                         <span th:text="${vmo.getSlRate()} "></span><span> đánh giá</span>
+                    </span>
+                    <span th:if="${vmo.getSlRate() == null}">
+                         <span> 0 đánh giá</span>
+                    </span>
+
+                </div>
+                <label class="giamgia" th:if="${vmo.getDiscount() != null}">
+                    <i class="fa fa-bolt" ></i> <span>Giảm </span><span th:text="${#numbers.formatInteger((vmo.getPrice() - (vmo.getPrice() * (1 - vmo.getDiscount()))),3,'POINT') + ' VNĐ'}"></span>
+                </label>
+                <button class="themvaogio" onclick="" title="Thêm vào giỏ" th:attr="data-product=${vmo.getId()},data-color=${vmo.getColor()}" >
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+
+            </a>
+        </div>
+
+
+    </div>
+    <div class="container">
+        <nav style="margin-top: 50px" aria-label="..." th:if="${vm.getObjectProductVM().size()>0}">
+            <ul class="pagination">
+                <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                    <li class="page-item active" th:if="${page.number == i}" aria-current="page">
+                        <a class="page-link" th:href="${''}" th:text="${i+1}"><span class="sr-only"></span></a>
+                    </li>
+                    <li class="page-item"  th:unless="${page.number == i}"><a class="page-link" th:text="${i+1}"
+                                                                              th:href="${'?'+(#httpServletRequest.getParameter('categoryId')==null?'':('&categoryId='+#httpServletRequest.getParameter('categoryId')))
+                                                                                       +('&page='+i)
+                                                                                       +(#httpServletRequest.getParameter('size')==null?'':('&size='+#httpServletRequest.getParameter('size')))
+                                                                                       +(#httpServletRequest.getParameter('sortByPrice')==null?'':('&sortByPrice='+#httpServletRequest.getParameter('sortByPrice')))
+                                                                                       +(#httpServletRequest.getParameter('name')==null?'':('&name='+#httpServletRequest.getParameter('name')))
+                                                                                       +(#httpServletRequest.getParameter('sortByP')==null?'':('&sortByP='+#httpServletRequest.getParameter('sortByP')))
+                                                                                       +(#httpServletRequest.getParameter('searchByPrice1')==null?'':('&searchByPrice1='+#httpServletRequest.getParameter('searchByPrice1')))
+                                                                                       +(#httpServletRequest.getParameter('searchByPrice2')==null?'':('&searchByPrice2='+#httpServletRequest.getParameter('searchByPrice2')))}"></a></li>
+                </th:block>
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+
+
+<div th:replace="fragments/footer :: footer_info"></div>
+<script type="text/javascript" src="https://ahachat.com/customer-chats/customer_chat_LfREVORYDR5efc8799aa406.js"></script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- Latest compiled and minified JavaScript -->
+
+<script th:src="@{/js/Jquery/Jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+<script th:src="@{/js/OwlCarousel2-2.3.4/dist/owl.carousel.min.js}"></script>
+<script th:src="@{/js/OwlCarousel2-2.3.4/dist/scrolls.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<script th:src="@{/js/home.js}"></script>
+<script th:src="@{/js/top.js}"></script>
+
+</body>
+</html>
